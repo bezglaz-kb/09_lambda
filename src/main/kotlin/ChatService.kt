@@ -78,24 +78,27 @@ class ChatService {
    }
 
     //6. Отредактировать сообщение
-    fun editMessage (messageId:Int, newText: String) {
+    fun editMessage (messageId:Int, newText: String): Message {
         val msg = messages.find {it.id == messageId && !it.isDeleted}
             ?: throw TargetIsDeletedException("Message hasn't been found")
         msg.text = newText
+        return msg
     }
 
     //7. Удалить сообщение
-    fun deleteMessage (messageId: Int) {
+    fun deleteMessage (messageId: Int): Boolean {
         val msg = messages.find {it.id == messageId && !it.isDeleted}
             ?: throw TargetIsDeletedException("Message has been deleted yet")
         msg.isDeleted = true
+        return true
     }
 
     //8. Удалить чат
-    fun deleteChat (userId: Int) {
+    fun deleteChat (userId: Int): Boolean {
         val chat = chats.find{it.userId == userId && !it.isDeleted}
             ?: throw TargetIsDeletedException("Chat hasn't been found")
         chat.isDeleted = true
         messages.filter{it.chatId == chat.id}.forEach { it.isDeleted = true }
+        return true
     }
 }

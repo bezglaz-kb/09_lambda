@@ -77,7 +77,8 @@ class ChatServiceTest {
         service.createMessage(userId = 10, text = "Два")
         service.createMessage(userId = 10, text = "Три")
 
-        service.deleteMessage(msg1.id)
+        val isDeleted = service.deleteMessage(msg1.id)
+        assertTrue(isDeleted)
 
         val activeMessages = service.getMessagesFromChat(userId = 10, count = 3)
         assertEquals(2, activeMessages.size)
@@ -101,7 +102,8 @@ class ChatServiceTest {
         val msg2 = service.createMessage(userId = 10, text = "Два")
         val msg3 = service.createMessage(userId = 10, text = "Три")
 
-        service.deleteChat(10)
+        val isDeleted = service.deleteChat(10)
+        assertTrue(isDeleted)
 
         assertEquals(1, service.getUnreadChatsCount())
     }
